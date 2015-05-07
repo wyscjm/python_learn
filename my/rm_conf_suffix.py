@@ -22,6 +22,7 @@ sys.setdefaultencoding('utf-8')
 def mvconfsuffix(dir):
     dir = os.path.abspath(dir)
     files = os.listdir(dir)
+    num = 0
     for file in files:
         if file.endswith(".dist"):
             new_file = re.sub(".dist","",file)
@@ -29,15 +30,17 @@ def mvconfsuffix(dir):
             filename = os.path.join(path,file)
             new_filename = os.path.join(path,new_file)
             shutil.copyfile(filename,new_filename)
+            num += 1
+            print "cp %s to %s" %(file,new_file)
         elif file.endswith(".bak"):
             new_file = re.sub(".bak","",file)
             path = os.path.abspath(dir)
             filename = os.path.join(path,file)
             new_filename = os.path.join(path,new_file)
             shutil.copyfile(filename,new_filename)
-    print "rm conf subffix"
-
-
+            num += 1
+            print "cp %s to %s" %(file,new_file)
+    print "had cp file: %d" %num
 if __name__ == '__main__':
     from optparse import OptionParser
     USAGE = """
