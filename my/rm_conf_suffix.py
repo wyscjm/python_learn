@@ -25,7 +25,9 @@ def mvconfsuffix(dir):
     num = 0
     for file in files:
         if file.endswith(".dist"):
-            new_file = re.sub(".dist","",file)
+            new_file = re.sub(".dist$","",file)
+            if new_file.startswith("."):
+                new_file = re.sub("^.","",new_file)
             path = os.path.abspath(dir)
             filename = os.path.join(path,file)
             new_filename = os.path.join(path,new_file)
@@ -33,7 +35,9 @@ def mvconfsuffix(dir):
             num += 1
             print "cp %s to %s" %(file,new_file)
         elif file.endswith(".bak"):
-            new_file = re.sub(".bak","",file)
+            new_file = re.sub(".bak$","",file)
+            if new_file.startswith("."):
+                new_file = re.sub("^.","",new_file)
             path = os.path.abspath(dir)
             filename = os.path.join(path,file)
             new_filename = os.path.join(path,new_file)
