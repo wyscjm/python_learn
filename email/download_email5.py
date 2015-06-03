@@ -79,7 +79,7 @@ try:
     for line in mailbox_data:
         flags, delimiter, mailbox_name = parse_list_response(line)
         m.select(mailbox_name, readonly=True)
-        typ, msg_ids = m.search(None, 'ALL')
+        typ, msg_ids = m.search(None, 'Unseen')
         print mailbox_name, typ, msg_ids        
 finally:
     try:

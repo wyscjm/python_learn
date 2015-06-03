@@ -17,7 +17,7 @@ try:
     M.select('INBOX',False)
     
    # result, message = M.select()
-    typ, data = M.search(None, 'ALL')
+    typ, data = M.search(None, 'Unseen')
     for num in string.split(data[0]):
         try:
             typ, data = M.fetch(num, '(UID BODY.PEEK[])')
