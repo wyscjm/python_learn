@@ -1,0 +1,14 @@
+LOG 
+
+#2015-06-03
+    1. QQ 获得邮件， 当search 为Seen时，能获得最新数据，但是获得数据不太对
+                              为Unseen时，通过ID获得数据不是INBOX里的Unseen的
+#2015-06-4:
+#   1.成功获取邮件，保存在nopriv里( 通过Unseen,下载最新的邮件）
+
+
+
+GIT LIST
+1. https://github.com/midnightslacker/email.git 
+    no test
+2. git@github.com:RaymiiOrg/NoPriv.git
