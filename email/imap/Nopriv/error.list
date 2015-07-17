@@ -1,0 +1,67 @@
+#1 fetch error
+##desc:
+  38:57.15 > KLGH4 EXAMINE INBOX
+  38:57.21 < * 5305 EXISTS
+  38:57.21 < * 0 RECENT
+  38:57.21 < * OK [UNSEEN 2]
+  38:57.21 < * OK [UIDVALIDITY 1433904339] UID validity status
+  38:57.21 < * OK [UIDNEXT 10184] Predicted next UID
+  38:57.21 < * FLAGS (\Answered \Flagged \Deleted \Draft \Seen)
+  38:57.21 < * OK [PERMANENTFLAGS ()] No permanent flags permitted
+  38:57.21 < KLGH4 OK [READ-ONLY] EXAMINE complete
+  38:57.21 > KLGH5 SEARCH Unseen
+  38:57.27 < * SEARCH 1754 3274
+  38:57.27 < KLGH5 OK SEARCH completed
+  38:57.27 > KLGH6 FETCH 73 (RFC822)
+  38:57.76 < * 73 FETCH (RFC822 {2584058}
+  38:57.76 read literal size 2584058
+  39:11.23 <  OK FETCH completed
+  40:12.78 last 4 IMAP4 interactions:
+  38:52.07 < * OK [CAPABILITY IMAP4 IMAP4rev1 IDLE XAPPLEPUSHSERVICE ID UIDPLUS AUTH=LOGIN NAMESPACE] QQMail IMAP4Server ready
+  38:52.07 > KLGH0 CAPABILITY
+  38:53.10 < * CAPABILITY IMAP4 IMAP4rev1 IDLE XAPPLEPUSHSERVICE AUTH=LOGIN NAMESPACE CHILDREN ID UIDPLUS
+  38:53.10 < KLGH0 OK CAPABILITY Completed
+SSL Connection Abort. Trying again (#0).
+  40:13.07 > EJMK1 LOGIN "hr@wutron.com" "wutron2015"
+  40:13.29 < EJMK1 OK Success login ok
+  40:13.29 > EJMK2 EXAMINE INBOX
+  40:13.64 < * 5305 EXISTS
+  40:13.64 < * 0 RECENT
+  40:13.64 < * OK [UNSEEN 2]
+  40:13.64 < * OK [UIDVALIDITY 1433904339] UID validity status
+  40:13.64 < * OK [UIDNEXT 10184] Predicted next UID
+  40:13.64 < * FLAGS (\Answered \Flagged \Deleted \Draft \Seen)
+  40:13.64 < * OK [PERMANENTFLAGS ()] No permanent flags permitted
+  40:13.64 < EJMK2 OK [READ-ONLY] EXAMINE complete
+  40:13.64 > EJMK3 SEARCH Unseen
+  40:13.85 < * SEARCH 1754 3274
+  40:13.85 < EJMK3 OK SEARCH completed
+  40:13.85 > EJMK4 FETCH 73 (RFC822)
+  40:14.05 < * 73 FETCH (RFC822 {2584058}
+  40:14.05 read literal size 2584058
+  40:25.00 <  OK FETCH completed
+  41:40.58 last 4 IMAP4 interactions:
+  40:12.96 < * OK [CAPABILITY IMAP4 IMAP4rev1 IDLE XAPPLEPUSHSERVICE ID UIDPLUS AUTH=LOGIN NAMESPACE] QQMail IMAP4Server ready
+  40:12.96 > EJMK0 CAPABILITY
+  40:13.03 < * CAPABILITY IMAP4 IMAP4rev1 IDLE XAPPLEPUSHSERVICE AUTH=LOGIN NAMESPACE CHILDREN ID UIDPLUS
+  40:13.07 < EJMK0 OK CAPABILITY Completed
+Traceback (most recent call last):
+  File "nopriv.py", line 867, in <module>
+    mail = connectToImapMailbox(IMAPSERVER, IMAPLOGIN, IMAPPASSWORD)
+  File "nopriv.py", line 248, in get_messages_to_local_maildir
+    import pdb; pdb.set_trace()
+  File "/usr/lib/python2.7/imaplib.py", line 443, in fetch
+    typ, dat = self._simple_command(name, message_set, message_parts)
+  File "/usr/lib/python2.7/imaplib.py", line 1070, in _simple_command
+    return self._command_complete(name, self._command(name, *args))
+  File "/usr/lib/python2.7/imaplib.py", line 899, in _command_complete
+    raise self.abort('command: %s => %s' % (name, val))
+imaplib.abort: command: FETCH => socket error: EOF
+
+##analsis:
+    邮件太大，无法正常下载，应该修改ssl配置
+##else:
+    1. foxmail 可以正常下载，并且速度满快的
+    2. foxmail 拉取的邮件5305.和我拉取的unseen的差不多
+
+#

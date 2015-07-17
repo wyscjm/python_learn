@@ -33,14 +33,15 @@ def get_num(file):
     return num
     print "file num is:"
 
-
-if __name__ == '__main__':
-    dir = "/home/ww/wutron"
-    files = get_file(dir)
+def get_resume():
+    files = get_file("/home/ww/project/resumefactory")
     total_line_num = 0
     for file in files:
-        if "/src/" in file:
-            total_line_num += get_num(file)
-        elif "/WebContent/" in file and ".js" in file:
-            total_line_num += get_num(file)
-    print "total_line_num:", total_line_num
+        total_line_num += get_num(file)
+    print "resum total_line_num:", total_line_num
+
+
+
+if __name__ == '__main__':
+    get_resume()
+    
