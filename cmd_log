@@ -1,0 +1,5 @@
+#1 string convert to ascii
+''.join(map(lambda c: "%02X" % ord(c), '123st'))
+写成lambda：
+asscii_string = lambda s: ''.join(map(lambda c: "%02X" % ord(c), s))
+asscii_string('123st') 
