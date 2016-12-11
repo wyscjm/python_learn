@@ -1,4 +1,5 @@
 
+
 """
 ctypes type 	C type 									Python type
 c_bool 			_Bool 									bool (1)
@@ -49,50 +50,73 @@ var_maps  ={
 
 def get_mid_string(str,begin_char,end_char):
 	try:
+		#print begin_char,end_char
+		#print str.index(begin_char),str.index(end_char)
 		if begin_char and end_char:
 			pos_begin = str.index(begin_char)
 			pos_end	  = str.index(end_char)
-		if pos_begin and pos_end:
-			print pos_begin, pos_end
-			#return str[pos_begin,pos_end]
+			#print str[int(pos_begin + len(begin_char) + 1):int(pos_end)]
+			return str[int(pos_begin + len(begin_char) + 1):int(pos_end)]
 	except :
-		raise
 		return None
 	
 
 
 def process_struct(data):
-	new_class = """class @1(Structure):
-	_fields_ = [
-		@2
-	]"""
+	new_class = "class @1(Structure):\n    _fields_ = [\n@2\n    ]"
 	temp = data.split("\n")
 	ret = "\"\"\"\n" + data + "\"\"\"\n"
-	print temp[-2]
+	#print temp[-2]
 	#print temp[0]
-	if get_mid_string(temp[-2],"}",";"):
-		print get_mid_string(temp[-2],"}",";")
+	#print get_mid_string(temp[-2],"}",";")
+	if get_mid_string(temp[-2],"}",";"):		
 		var1 = get_mid_string(temp[-2],"}",";")
 	else:
 		var1 = get_mid_string(temp[0],"struct","{")
 	if var1:
-		new_class.replace("@1",var1.strip())
+		var1 = var1.strip()
+		#print new_class.replace("@1",var1)
+		new_class = new_class.replace("@1",var1)
+		
+	var2 = ""
+	for line in temp[1:-2]:
+		elems = line.split(" ")
+		__value = ""
+		__key = ""
+		if ";" in line:
+			for elem in elems:
+				if ";" in elem:
+					__value = elem.replace(";","")
+					#print line
+					#print __value
+					__key = line[0:line.index(elem)]
+		if __value and __key:
+			for key in var_maps.keys():
+				if key.replace(" ","") == __key.replace(" ",""):				
+					__key = key.replace(" ","")
+			var2 += "    \"" + __value.strip() + "\": " + __key.strip()  + "\n"
+	if var2:
+		new_class = new_class.replace("@2",var2)
+	#print var2
 	ret += new_class
 	return ret
 	
 
-f_in = open("1.py")
+f_in = open("vxlapi_prepy.py")
 
 out_data = ""
 out_data_temp = ""
 
-# remove "#define "
+
 # replace "//" to "#"
 # replace "/*" to """""
 
+
+
+
 for line in f_in:
-	if line.startswith("XL_"):
-		line = line.replace("(unsigned int)","").replace("(unsigned short)","")
+	if line.startswith("#define XL") or  line.startswith("#define LIN") or line.startswith("#define RECEIVE") :
+		line = line.replace("(unsigned int)","").replace("(unsigned short)","").replace("#define ","").replace("(unsigned char)","")
 		if "=" not in line:
 			a = line.split(" ")
 			pos_in = 0
@@ -128,17 +152,6 @@ for line in lines:
 	
 
 out_data = out_data_temp	
-f_out = open("2.py","w")
+f_out = open("vxlapi.py","w")
 f_out.write(out_data)
 f_out.close()
-	
-	
-
-
-
-
-
-
-
-
-
