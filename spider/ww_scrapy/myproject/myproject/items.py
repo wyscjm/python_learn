@@ -8,7 +8,7 @@
 import scrapy
 
 
-class MyprojectItem(scrapy.Item):
+class DmozItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     #pass
@@ -16,3 +16,8 @@ class MyprojectItem(scrapy.Item):
     link  = scrapy.Field()
     desc  = scrapy.Field()
 
+
+class UstcItem(scrapy.Item):
+    title = scrapy.Field()
+    link = scrapy.Field()
+    desc = scrapy.Field()

@@ -10,6 +10,15 @@ sudo easy_install --upgrade pyOpenSSL
 
 
 #Project
+[refer1](http://www.jianshu.com/p/a8aad3bf4dc4)
 start a project
+1. creat a project
+scrapy runspider ww_spider.py
+2. creat a spider
+scrapy genspider [-t template] <name> <domain>
+
+T1: scrapy cmd
+scrapy shell http://www.dmoz.org/Computers/Programming/Languages/Python/Books/ 
+
 
 
