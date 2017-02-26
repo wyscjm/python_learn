@@ -12,10 +12,84 @@ sudo easy_install --upgrade pyOpenSSL
 #Project
 [refer1](http://www.jianshu.com/p/a8aad3bf4dc4)
 start a project
-1. creat a project
+## creat a project
 scrapy runspider ww_spider.py
-2. creat a spider
+## creat a spider
 scrapy genspider [-t template] <name> <domain>
+## get the data
+1. update the item.py to config the item content.
+``` python
+class DmozItem(scrapy.Item):
+    # define the fields for your item here like:
+    # name = scrapy.Field()
+    #pass
+    title = scrapy.Field()
+    link  = scrapy.Field()
+    desc  = scrapy.Field()
+```
+2. update the spider's parse to get the data to the
+specifical item
+``` python
+from myproject.items import DmozItem 
+
+class DmozSpider(scrapy.Spider):
+    name = "dmoz"
+    allowed_domains = ["dmoz.org"]
+    start_urls = [
+            "http://www.dmoz.org/Computers/Programming/Languages/Python/Books/",
+            "http://www.dmoz.org/Computers/Programming/Languages/Python/Resources/"
+            ]
+
+    def parse(self, response):
+        sel = scrapy.Selector(response)
+        sites =  sel.xpath('//ul/li')
+        for site in sites:
+            item = DmozItem()
+            item["title"] = site.xpath('a/text()').extract()
+            item["link"] = site.xpath('a/@href').extract()
+            item["desc"] = site.xpath("text()").extract()
+            yield item
+            #print title
+```
+scrapy crawl dmoz 
+scrapy crawl dmoz -o items.json
+scrapy crawl dmoz -o items.json -t json
+
+## download the file
+Notes: the files and file_urls is not the same conten when you get the item 
+in the pipelinks.
+
+1. rebulid a pipe from filepipeline
+``` python
+class UstcPipeline(FilesPipeline):
+    def file_path(self, request, response=None, info=None):  
+        """ return the filename will be saved"""
+        image_guid = request.url.split('/')[-1]  
+        return 'full/%s' % (image_guid)  
+
+    def item_completed(self, results, item, info):
+        """ when the file had download will be call"""
+        return item
+
+```
+
+2. update the the setting
+``` python
+ITEM_PIPELINES = {
+#    'scrapy.pipelines.files.FilesPipeline': 1,
+    'myproject.pipelines.MyprojectPipeline':0,
+    'myproject.pipelines.UstcPipeline':10,
+}
+
+FILES_STORE = "/tmp/scrapy"
+#IMAGES_STORE
+
+```
+
+3. get the file
+when you run the below cmd , you will get the file in /tmp/scrapy/full
+scrapy crawl dmoz 
+
 
 T1: scrapy cmd
 scrapy shell http://www.dmoz.org/Computers/Programming/Languages/Python/Books/ 
