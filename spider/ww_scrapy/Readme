@@ -1,0 +1,15 @@
+#install
+
+https://scrapy.org/
+
+## install by pip
+pip install scrapy
+
+Q1. AttributeError: 'module' object has no attribute 'OP_NO_TLSv1_1'
+sudo easy_install --upgrade pyOpenSSL
+
+
+#Project
+start a project
+
+
