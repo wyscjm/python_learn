@@ -45,3 +45,7 @@ setup(
     zipfile=None
 )
 ```
+
+# PyQt官网
+官网：https://www.riverbankcomputing.com/software/pyqt/download5
+pip install PyQt5
