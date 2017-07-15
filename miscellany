@@ -1,0 +1,4 @@
+## char to hex
+```
+''.join(map(lambda c: "%02X," % ord(c), 'xxxxx'))
+```
