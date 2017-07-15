@@ -1,0 +1,30 @@
+#!/usr/bin/env python
+#-*- coding:utf8-*-
+
+import os
+import sys
+
+dirs_name = ["adapt","core"]
+file_type = [".c",".h",".sdh"]
+version_start = "* Archive: Revision "
+dir_src = "."
+
+#read all file
+#check all file_type
+#get the lastest version
+#out the data
+
+for root,dirs,files in os.walk(dir_src,True):
+	for fname in files:
+		if os.path.splitext(fname)[1] in file_type:
+			f_path = os.path.join(root,fname)
+			f = open(f_path,'r')
+			all_version = []
+			for line in f:
+				if version_start in line:
+					version = line.split(" ")[3]
+					all_version.append(version)
+			if all_version:
+				print fname.ljust(20),"\t",all_version[0].rjust(20)
+			else:
+				print fname.ljust(20),"\t"
